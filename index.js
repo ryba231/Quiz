@@ -32,7 +32,7 @@ Navigation.registerComponent('Test',()=>Test);
 Navigation.registerComponent('App',()=>App);
 
 
-
+<Header/>
 const { width } = Dimensions.get('window');
 Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setDefaultOptions({
