@@ -54,7 +54,7 @@ Navigation.events().registerAppLaunchedListener(() => {
                         children: [
                             {
                                 component: {
-                                    name: 'Home',
+                                    name: 'Welcome',
                                 }
                             },
                         ]
