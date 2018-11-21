@@ -35,7 +35,7 @@ export default class Results extends Component<Props> {
                 <Header
                     leftComponent={{
                         icon: 'menu',
-                        color: '#FFFFFF',
+                        color: '#D4D4D4',
                         onPress: () => alert('ea'),
                     }}
                     centerComponent={{text: 'Results', style: {color: '#000000', fontSize: 20,}}}

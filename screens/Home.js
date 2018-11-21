@@ -29,7 +29,7 @@ export default class Home extends Component<Props> {
                 <Header
                     leftComponent={{
                         icon: 'menu',
-                        color: '#FFFFFF',
+                        color: '#D4D4D4',
                         onPress: () => alert('ok'),
                     }}
                     centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:20 } }}

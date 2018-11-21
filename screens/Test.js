@@ -19,7 +19,7 @@ export default class App extends Component<Props> {
                 <Header
                     leftComponent={{
                         icon: 'menu',
-                        color: '#fff',
+                        color: '#D4D4D4',
                         onPress: () => alert('ea'),
                     }}
                     centerComponent={{text: 'Test #1', style: {color: '#000000', fontSize: 20,}}}
