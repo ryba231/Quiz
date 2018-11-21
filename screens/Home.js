@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Dimensions, Linking, Button, TouchableOpacity} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    Dimensions,
+    Linking,
+    Button,
+    TouchableOpacity,
+    SafeAreaView
+} from 'react-native';
 import {Navigation} from 'react-native-navigation'
+import {Header} from "react-native-elements";
 
 
 const {width} = Dimensions.get('window');
@@ -15,6 +26,15 @@ export default class Home extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
+                <Header
+                    leftComponent={{
+                        icon: 'menu',
+                        color: '#FFFFFF',
+                        onPress: () => alert('ok'),
+                    }}
+                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:20 } }}
+                    backgroundColor='#FFFFFF'
+                />
                 <ScrollView>
                     <View style={styles.title}>
                         <Text style={styles.titleText}>Title Test #1 </Text>
@@ -90,12 +110,9 @@ export default class Home extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#FFFFFF',
     },
     title: {
-        flex: 1,
         marginHorizontal: 10,
         marginTop: 30,
         paddingVertical: 10,

@@ -25,6 +25,7 @@ import Results from './screens/Results'
 import Test from './screens/Test'
 
 
+
 Navigation.registerComponent('Welcome', () => Welcome);
 Navigation.registerComponent('Results',()=> Results);
 Navigation.registerComponent('Home',()=>Home);
@@ -32,10 +33,24 @@ Navigation.registerComponent('Test',()=>Test);
 Navigation.registerComponent('App',()=>App);
 
 
-<Header/>
+
 const { width } = Dimensions.get('window');
 Navigation.events().registerAppLaunchedListener(() => {
     Navigation.setDefaultOptions({
+        topBar: {
+            elevation: 0,
+            visible: false,
+            drawBehind: true,
+            animate: false,
+            buttonColor: 'white',
+            title: {
+                color: 'white',
+                alignment: 'center'
+            },
+            background: {
+                color: 'transparent'
+            }
+        }
 
     });
     Navigation.setRoot({

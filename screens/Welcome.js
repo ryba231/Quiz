@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Button, TouchableOpacity, Dimensions, ScrollView,Image} from 'react-native';
 import {Navigation} from 'react-native-navigation'
-import {createDrawerNavigator} from 'react-navigation'
+
 
 const {width} = Dimensions.get('window');
 
