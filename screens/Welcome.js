@@ -16,9 +16,9 @@ const {width} = Dimensions.get('window');
 class WelcomeScreen extends Component {
 
     goToScreen = (screenName) => {
-        Navigation.push(this.props.componentId, {
-            component: {
-                name: screenName
+        Navigation.setStackRoot('MAIN_STACK',{
+            component:{
+                name:screenName,
             }
         })
     };
