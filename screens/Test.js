@@ -7,13 +7,135 @@
  */
 
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import {Header} from "react-native-elements";
 
 const {width} = Dimensions.get('window');
+let arrnew = [];
+const jsonData = {
+    "quiz": {
+        "question1": {
+            "correct": "option3",
+            "options": {
+                "option1": "3",
+                "option2": "5",
+                "option3": "4",
+                "option4": "2"
+            },
+            "question": "2 + 2 = "
+        },
+        "question2": {
+            "correct": "option4",
+            "options": {
+                "option1": "XML",
+                "option2": "YML",
+                "option3": "HTML",
+                "option4": "JSX"
+            },
+            "question": "____ tag syntax is used in React"
+        },
+        "question3": {
+            "correct": "option1",
+            "options": {
+                "option1": "Single root DOM node",
+                "option2": "Double root DOM node",
+                "option3": "Multiple root DOM node",
+                "option4": "None of the above"
+            },
+            "question": "Application built with just React usually have ____"
+        },
+        "question4": {
+            "correct": "option2",
+            "options": {
+                "option1": "mutable",
+                "option2": "immutable",
+                "option3": "variable",
+                "option4": "none of the above"
+            },
+            "question": "React elements are ____"
+        },
+        "question5": {
+            "correct": "option3",
+            "options": {
+                "option1": "functions",
+                "option2": "array",
+                "option3": "components",
+                "option4": "json data"
+            },
+            "question": "React allows to split UI into independent and reusable pieses of ____"
+        }
+    }
+};
 
-export default class App extends Component<Props> {
+export default class Test extends Component<Props> {
+    constructor(props) {
+        super(props);
+        this.qno = 0;
+        this.score = 0;
+
+        const jData = jsonData.quiz;
+        arrnew = Object.keys(jData).map(function (i) {
+            return jData[i];
+        });
+        this.state = {
+            question: arrnew[this.qno].question,
+            options: arrnew[this.qno].options,
+            correct: arrnew[this.qno].correct,
+            countCheck: 0,
+        }
+
+    }
+
+    next() {
+
+        if (this.qno < arrnew.length - 1) {
+            this.qno++;
+
+            this.setState({
+                countCheck: 0,
+                question: arrnew[this.qno].question,
+                options: arrnew[this.qno].options,
+                correct: arrnew[this.qno].correct,
+            })
+        } else {
+            alert(this.qno);
+        }
+    }
+
+    _answer(status, answer) {
+
+
+        if (answer === this.state.correct) {
+            const count = this.state.countCheck + 1;
+            this.setState({countCheck: count});
+            this.setState.score += 1;
+
+        } else {
+            const count = this.state.countCheck - 1;
+            this.setState({countCheck: count});
+            if (this.state.countCheck < 1 || answer === this.state.correct) {
+                this.score -= 1;
+            }
+
+        }
+    }
+
     render() {
+        let _this = this;
+        const currentOptions = this.state.options;
+        const options = Object.keys(currentOptions).map(function (i) {
+            return (
+                <View key={i}>
+                    <TouchableOpacity countCheck={_this.state.countCheck}
+                                      style={styles.answerButton}
+                                      _onPress={(status) => _this._answer(status, i)}
+                                      onPress={() => _this.next()}>
+                        <Text>{currentOptions[i]}</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+
+        });
         return (
             <View style={styles.container}>
                 <Header
@@ -26,31 +148,28 @@ export default class App extends Component<Props> {
                     backgroundColor='#FFFFFF'
                 />
                 <View style={{padding: 10}}>
-                    <View style={{justifyContent: 'space-between', flexDirection: 'row', marginBottom: 60, alignItems: 'flex-start'}}>
-                        <Text style={{fontSize: 20}}>Question 3 of 10</Text>
+                    <View style={{
+                        justifyContent: 'space-between',
+                        flexDirection: 'row',
+                        marginBottom: 60,
+                        alignItems: 'flex-start'
+                    }}>
+                        <Text style={{fontSize: 20}}>Question {this.qno + 1} of 5</Text>
                         <Text style={{fontSize: 20}}>Time: 28 sec</Text>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center', margin: 15}}>
-                        <Text style={{fontSize: 20}}>This is some example of a long question to fill the content?</Text>
+                        <Text style={{fontSize: 20}}>{this.state.question}</Text>
                     </View>
-                    <Text style={{margin: 15}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua.</Text>
-                    <View style={styles.viewButtons}>
-                        <TouchableOpacity style={styles.answerButton} onPress={() => this.goToScreen
-                        ('App')}><Text>Answer A</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.answerButton} onPress={() => this.goToScreen
-                        ('App')}><Text>Answer B</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.answerButton} onPress={() => this.goToScreen
-                        ('App')}><Text>Answer C</Text></TouchableOpacity>
-                        <TouchableOpacity style={styles.answerButton} onPress={() => this.goToScreen
-                        ('App')}><Text>Answer D</Text></TouchableOpacity>
 
+                    <View style={styles.viewButtons}>
+                        {options}
                     </View>
                 </View>
             </View>
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
