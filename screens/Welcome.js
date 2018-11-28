@@ -13,7 +13,7 @@ import {Navigation} from 'react-native-navigation'
 
 const {width} = Dimensions.get('window');
 
-class WelcomeScreen extends Component {
+export default class WelcomeScreen extends Component {
 
     goToScreen = (screenName) => {
         Navigation.setStackRoot('MAIN_STACK',{
@@ -52,13 +52,13 @@ class WelcomeScreen extends Component {
     }
 }
 
-export default WelcomeScreen;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#4f5ca5',
     },
     buttons: {
         width: width-80,
