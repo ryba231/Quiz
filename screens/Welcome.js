@@ -28,8 +28,11 @@ export default class WelcomeScreen extends Component {
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.views}>
-                        <Text style={{fontSize: 40, fontWeight: 'bold',marginBottom: 20}}>Quiz App</Text>
-                        <Image style={{width:160, height: 160}} source={{uri:'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
+                        <Text style={{fontSize: 40, fontWeight: 'bold',
+                            marginBottom: 20,marginLeft:40}}>
+                            Quiz App
+                        </Text>
+                        <Image style={{width:160, height: 160,marginLeft:40,}} source={{uri:'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.goToScreen
                         ('Home')}><Text>Home Page</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.goToScreen
@@ -65,9 +68,9 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop: 20,
         borderWidth: 0.5,
-        borderRadius: 4,
+        borderRadius: 30,
         borderColor: '#000000',
-        backgroundColor: '#D4D4D4',
+        backgroundColor: '#366d47',
         justifyContent: 'center',
         alignItems: 'center',
     },

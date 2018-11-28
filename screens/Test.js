@@ -98,24 +98,16 @@ export default class Test extends Component<Props> {
                 correct: arrnew[this.qno].correct,
             })
         } else {
-            alert(this.qno);
+            alert(this.score);
         }
     }
 
-    _answer(status, answer) {
-
+    _answer(answer) {
 
         if (answer === this.state.correct) {
             const count = this.state.countCheck + 1;
             this.setState({countCheck: count});
             this.setState.score += 1;
-
-        } else {
-            const count = this.state.countCheck - 1;
-            this.setState({countCheck: count});
-            if (this.state.countCheck < 1 || answer === this.state.correct) {
-                this.score -= 1;
-            }
 
         }
     }
@@ -128,7 +120,7 @@ export default class Test extends Component<Props> {
                 <View key={i}>
                     <TouchableOpacity countCheck={_this.state.countCheck}
                                       style={styles.answerButton}
-                                      _onPress={(status) => _this._answer(status, i)}
+                                      _onPress={() => _this._answer(i)}
                                       onPress={() => _this.next()}>
                         <Text>{currentOptions[i]}</Text>
                     </TouchableOpacity>
@@ -136,6 +128,7 @@ export default class Test extends Component<Props> {
             )
 
         });
+
         return (
             <View style={styles.container}>
                 <Header
@@ -144,8 +137,8 @@ export default class Test extends Component<Props> {
                         color: '#D4D4D4',
                         onPress: () => alert('ea'),
                     }}
-                    centerComponent={{text: 'Test #1', style: {color: '#000000', fontSize: 20,}}}
-                    backgroundColor='#FFFFFF'
+                    centerComponent={{text: 'Test #1', style: {color: '#000000', fontSize: 30,}}}
+                    backgroundColor='#303060'
                 />
                 <View style={{padding: 10}}>
                     <View style={{
@@ -154,7 +147,7 @@ export default class Test extends Component<Props> {
                         marginBottom: 60,
                         alignItems: 'flex-start'
                     }}>
-                        <Text style={{fontSize: 20}}>Question {this.qno + 1} of 5</Text>
+                        <Text style={{fontSize: 20}}>Question {this.qno +1} of 5</Text>
                         <Text style={{fontSize: 20}}>Time: 28 sec</Text>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center', margin: 15}}>
@@ -174,7 +167,7 @@ export default class Test extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: '#4f5ca5',
     },
     viewButtons: {
         marginTop: 30,

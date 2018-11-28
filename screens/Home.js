@@ -32,8 +32,8 @@ export default class Home extends Component<Props> {
                         color: '#D4D4D4',
                         onPress: () => alert('ok'),
                     }}
-                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:20 } }}
-                    backgroundColor='#FFFFFF'
+                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:30 } }}
+                    backgroundColor='#303060'
                 />
                 <ScrollView>
                     <View style={styles.title}>
@@ -99,7 +99,7 @@ export default class Home extends Component<Props> {
                     <View style={styles.footer}>
                         <Text style={styles.titleText}> Get to know your ranking result</Text>
                         <TouchableOpacity style={styles.buttonFooter} onPress={() => this.goToScreen
-                        ('App')}><Text>Check!</Text></TouchableOpacity>
+                        ('Results')}><Text>Check!</Text></TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>
@@ -110,7 +110,7 @@ export default class Home extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#4f5ca5',
     },
     title: {
         marginHorizontal: 10,
@@ -146,9 +146,9 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop:20,
         borderWidth: 0.5,
-        borderRadius: 4,
+        borderRadius: 30,
         borderColor: '#000000',
-        backgroundColor: '#D4D4D4',
+        backgroundColor: '#366d47',
         justifyContent: 'center',
         alignItems: 'center',
     }

@@ -69,7 +69,7 @@ Navigation.events().registerAppLaunchedListener(() => {
                         children: [
                             {
                                 component: {
-                                    name: 'Welcome',
+                                    name: 'App',
                                 }
                             },
                         ]
