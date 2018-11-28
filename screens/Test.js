@@ -27,42 +27,42 @@ const jsonData = {
         "question2": {
             "correct": "option4",
             "options": {
-                "option1": "XML",
-                "option2": "YML",
-                "option3": "HTML",
-                "option4": "JSX"
+                "option1": "2",
+                "option2": "1",
+                "option3": "5",
+                "option4": "0"
             },
-            "question": "____ tag syntax is used in React"
+            "question": "2 - 2 ="
         },
         "question3": {
             "correct": "option1",
             "options": {
-                "option1": "Single root DOM node",
-                "option2": "Double root DOM node",
-                "option3": "Multiple root DOM node",
-                "option4": "None of the above"
+                "option1": "9",
+                "option2": "3",
+                "option3": "18",
+                "option4": "25"
             },
-            "question": "Application built with just React usually have ____"
+            "question": "3 * 3 ="
         },
         "question4": {
             "correct": "option2",
             "options": {
-                "option1": "mutable",
-                "option2": "immutable",
-                "option3": "variable",
-                "option4": "none of the above"
+                "option1": "11",
+                "option2": "1",
+                "option3": "2",
+                "option4": "5"
             },
-            "question": "React elements are ____"
+            "question": "1 * 1 ="
         },
         "question5": {
             "correct": "option3",
             "options": {
-                "option1": "functions",
-                "option2": "array",
-                "option3": "components",
-                "option4": "json data"
+                "option1": "1",
+                "option2": "3",
+                "option3": "2",
+                "option4": "12"
             },
-            "question": "React allows to split UI into independent and reusable pieses of ____"
+            "question": "1 + 1 ="
         }
     }
 };
@@ -122,7 +122,7 @@ export default class Test extends Component<Props> {
                                       style={styles.answerButton}
                                       _onPress={() => _this._answer(i)}
                                       onPress={() => _this.next()}>
-                        <Text>{currentOptions[i]}</Text>
+                        <Text style={{fontSize:20}}>{currentOptions[i]}</Text>
                     </TouchableOpacity>
                 </View>
             )
@@ -185,9 +185,9 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 20,
         borderWidth: 0.5,
-        borderRadius: 4,
+        borderRadius: 30,
         borderColor: '#000000',
-        backgroundColor: '#D4D4D4',
+        backgroundColor: '#8f8f8f',
         justifyContent: 'center',
         alignItems: 'center',
 
