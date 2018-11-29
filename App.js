@@ -26,10 +26,10 @@ export default class App extends Component {
         return (
             <View style = {styles.container}>
                 <Image style={{width:160, height: 160}} source={{uri:'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
-                <Text style={{fontWeight: 'bold',fontSize:30,}}>Podaj swój nick</Text>
+                <Text style={{fontSize:30,fontFamily:'Righteous-Regular'}}>Podaj swój nick</Text>
                 <TextInput style = {styles.textInput} autoCapitalize = 'none'
                            onChangeText = {this.setName}/>
-                <Text style={{fontWeight: 'bold',fontSize:30,}}>Witamy: {this.state.name}</Text>
+                <Text style={{fontSize:30,fontFamily:'IndieFlower'}}>Witamy: {this.state.name}</Text>
                 <TouchableOpacity style={styles.buttons}
                                   onPress={()=> this.goToScreen('Home')}>
                     <Text>Zatwierdź</Text>
@@ -66,5 +66,6 @@ const styles = StyleSheet.create ({
         backgroundColor: '#366d47',
         justifyContent: 'center',
         alignItems: 'center',
+
     },
 });

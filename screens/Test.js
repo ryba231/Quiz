@@ -137,7 +137,7 @@ export default class Test extends Component<Props> {
                         color: '#D4D4D4',
                         onPress: () => alert('ea'),
                     }}
-                    centerComponent={{text: 'Test #1', style: {color: '#000000', fontSize: 30,}}}
+                    centerComponent={{text: 'Test #1', style: {color: '#000000', fontSize: 30,fontFamily:'IndieFlower'}}}
                     backgroundColor='#303060'
                 />
                 <View style={{padding: 10}}>
@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#8f8f8f',
         justifyContent: 'center',
         alignItems: 'center',
+
 
 
     }

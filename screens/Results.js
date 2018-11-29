@@ -39,7 +39,7 @@ class RefreshControlExample extends Component {
                         color: '#D4D4D4',
                         onPress: () => alert('ea'),
                     }}
-                    centerComponent={{text: 'Results', style: {color: '#000000', fontSize: 30,}}}
+                    centerComponent={{text: 'Results', style: {color: '#000000', fontSize: 30,fontFamily:'IndieFlower'}}}
                     backgroundColor='#303060'
                 />
                 <ListView

@@ -29,7 +29,7 @@ export default class WelcomeScreen extends Component {
                 <ScrollView>
                     <View style={styles.views}>
                         <Text style={{fontSize: 40, fontWeight: 'bold',
-                            marginBottom: 20,marginLeft:40}}>
+                            marginBottom: 20,marginLeft:40,fontFamily:'Righteous-Regular'}}>
                             Quiz App
                         </Text>
                         <Image style={{width:160, height: 160,marginLeft:40,}} source={{uri:'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#366d47',
         justifyContent: 'center',
         alignItems: 'center',
+
     },
     views: {
         flex: 1,

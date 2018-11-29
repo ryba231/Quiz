@@ -32,7 +32,7 @@ export default class Home extends Component<Props> {
                         color: '#D4D4D4',
                         onPress: () => alert('ok'),
                     }}
-                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:30 } }}
+                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:30,fontFamily:'IndieFlower' } }}
                     backgroundColor='#303060'
                 />
                 <ScrollView>
@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily:'Righteous-Regular'
     },
     textLink: {
         color: '#3c6eff',
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#366d47',
         justifyContent: 'center',
         alignItems: 'center',
+
     }
 
 
