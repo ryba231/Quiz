@@ -24,6 +24,16 @@ export default class Home extends Component<Props> {
             }
         })
     };
+    openDrawer = () =>{
+      Navigation.mergeOptions('drawerId',{
+          sideMenu:{
+              left:{
+                  visible: true
+              }
+          }
+      });
+    };
+
 
     render() {
         return (
@@ -32,7 +42,7 @@ export default class Home extends Component<Props> {
                     leftComponent={{
                         icon: 'menu',
                         color: '#D4D4D4',
-                        onPress: () => this.openMenu(),
+                        onPress: () => this.openDrawer(),
                     }}
                     centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:30,fontFamily:'IndieFlower' } }}
                     backgroundColor='#303060'

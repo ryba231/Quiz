@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, ListView, RefreshControl, Text,ScrollView} from 'react-native'
+import {StyleSheet, View, ListView, RefreshControl, Text,ScrollView} from 'react-native';
 import {Header} from "react-native-elements";
+import {Navigation} from "react-native-navigation";
 
 
 export default class Results extends Component {
@@ -17,6 +18,15 @@ export default class Results extends Component {
             })
             .catch(error => console.log(error));
     }
+    openDrawer = () =>{
+        Navigation.mergeOptions('drawerId',{
+            sideMenu:{
+                left:{
+                    visible: true
+                }
+            }
+        });
+    };
 
 
     render() {
@@ -26,7 +36,7 @@ export default class Results extends Component {
                     leftComponent={{
                         icon: 'menu',
                         color: '#D4D4D4',
-                        onPress: () => alert('ea'),
+                        onPress: () => this.openDrawer(),
                     }}
                     centerComponent={{
                         text: 'Results',

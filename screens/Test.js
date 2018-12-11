@@ -9,6 +9,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Dimensions, TouchableOpacity} from 'react-native';
 import {Header} from "react-native-elements";
+import {Navigation} from "react-native-navigation"
 
 const {width} = Dimensions.get('window');
 let arrnew = [];
@@ -85,7 +86,15 @@ export default class Test extends Component<Props> {
         }
 
     }
-
+    openDrawer = () =>{
+        Navigation.mergeOptions('drawerId',{
+            sideMenu:{
+                left:{
+                    visible: true
+                }
+            }
+        });
+    };
     next() {
 
         if (this.qno < arrnew.length - 1) {
@@ -135,7 +144,7 @@ export default class Test extends Component<Props> {
                     leftComponent={{
                         icon: 'menu',
                         color: '#D4D4D4',
-                        onPress: () => alert('ea'),
+                        onPress: () => this.openDrawer(),
                     }}
                     centerComponent={{text: 'Test #1', style: {color: '#000000', fontSize: 30,fontFamily:'IndieFlower'}}}
                     backgroundColor='#303060'

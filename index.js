@@ -23,6 +23,7 @@ import Welcome from './screens/Welcome'
 import Home from './screens/Home'
 import Results from './screens/Results'
 import Test from './screens/Test'
+import Baza from './screens/Baza'
 
 
 
@@ -33,6 +34,7 @@ Navigation.registerComponent('Results',()=> Results);
 Navigation.registerComponent('Home',()=>Home);
 Navigation.registerComponent('Test',()=>Test);
 Navigation.registerComponent('App',()=>App);
+Navigation.registerComponent('Baza',()=>Baza);
 
 
 
