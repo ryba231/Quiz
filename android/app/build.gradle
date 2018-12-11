@@ -151,8 +151,6 @@ configurations.all {
 }
 
 dependencies {
-    compile project(':react-native-vector-icons')
-    compile project(':react-native-sqlite-storage')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'com.android.support:design:25.4.0'
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
