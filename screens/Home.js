@@ -14,6 +14,7 @@ import {Navigation} from 'react-native-navigation'
 import {Header} from "react-native-elements";
 
 
+
 const {width} = Dimensions.get('window');
 export default class Home extends Component<Props> {
     goToScreen = (screenName) => {
@@ -23,6 +24,7 @@ export default class Home extends Component<Props> {
             }
         })
     };
+
     render() {
         return (
             <View style={styles.container}>
@@ -30,10 +32,10 @@ export default class Home extends Component<Props> {
                     leftComponent={{
                         icon: 'menu',
                         color: '#D4D4D4',
-                        onPress: () => alert('ok'),
+                        onPress: () => this.openMenu(),
                     }}
-                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:20 } }}
-                    backgroundColor='#FFFFFF'
+                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:30,fontFamily:'IndieFlower' } }}
+                    backgroundColor='#303060'
                 />
                 <ScrollView>
                     <View style={styles.title}>
@@ -99,7 +101,7 @@ export default class Home extends Component<Props> {
                     <View style={styles.footer}>
                         <Text style={styles.titleText}> Get to know your ranking result</Text>
                         <TouchableOpacity style={styles.buttonFooter} onPress={() => this.goToScreen
-                        ('App')}><Text>Check!</Text></TouchableOpacity>
+                        ('Results')}><Text>Check!</Text></TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>
@@ -110,7 +112,7 @@ export default class Home extends Component<Props> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#4f5ca5',
     },
     title: {
         marginHorizontal: 10,
@@ -122,7 +124,8 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        fontFamily:'Righteous-Regular'
     },
     textLink: {
         color: '#3c6eff',
@@ -146,11 +149,12 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop:20,
         borderWidth: 0.5,
-        borderRadius: 4,
+        borderRadius: 30,
         borderColor: '#000000',
-        backgroundColor: '#D4D4D4',
+        backgroundColor: '#366d47',
         justifyContent: 'center',
         alignItems: 'center',
+
     }
 
 

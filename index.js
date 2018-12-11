@@ -26,11 +26,15 @@ import Test from './screens/Test'
 
 
 
+
+
 Navigation.registerComponent('Welcome', () => Welcome);
 Navigation.registerComponent('Results',()=> Results);
 Navigation.registerComponent('Home',()=>Home);
 Navigation.registerComponent('Test',()=>Test);
 Navigation.registerComponent('App',()=>App);
+
+
 
 
 
@@ -69,7 +73,7 @@ Navigation.events().registerAppLaunchedListener(() => {
                         children: [
                             {
                                 component: {
-                                    name: 'Welcome',
+                                    name: 'App',
                                 }
                             },
                         ]
