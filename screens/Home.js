@@ -14,6 +14,7 @@ import {Navigation} from 'react-native-navigation'
 import {Header} from "react-native-elements";
 
 
+
 const {width} = Dimensions.get('window');
 export default class Home extends Component<Props> {
     goToScreen = (screenName) => {
@@ -23,6 +24,7 @@ export default class Home extends Component<Props> {
             }
         })
     };
+
     render() {
         return (
             <View style={styles.container}>
@@ -30,7 +32,7 @@ export default class Home extends Component<Props> {
                     leftComponent={{
                         icon: 'menu',
                         color: '#D4D4D4',
-                        onPress: () => alert('ok'),
+                        onPress: () => this.openMenu(),
                     }}
                     centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:30,fontFamily:'IndieFlower' } }}
                     backgroundColor='#303060'
