@@ -13,8 +13,7 @@ export default class Results extends Component {
         fetch('https://pwsz-quiz-api.herokuapp.com/api/results')
             .then(response => response.json())
             .then(data => {
-                var json_data = data;
-                this.setState({wynik: json_data})
+                this.setState({wynik: data})
             })
             .catch(error => console.log(error));
     }
@@ -40,7 +39,7 @@ export default class Results extends Component {
                     }}
                     centerComponent={{
                         text: 'Results',
-                        style: {color: '#000000', fontSize: 30, fontFamily: 'IndieFlower'}
+                        style: {color: '#FFFFFF', fontSize: 30, fontFamily: 'IndieFlower'}
                     }}
                     backgroundColor='#303060'
                 />

@@ -11,10 +11,12 @@ import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
 
+import org.pgsqlite.SQLitePluginPackage;
+
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends NavigationApplication implements ReactApplication {
 
   @Override
   public boolean isDebug()
@@ -36,18 +38,19 @@ public class MainApplication extends NavigationApplication {
     return new ReactGateway(this, isDebug(), host);
   }
 
-  protected List<ReactPackage> getPackages()
-  {
-    // Add additional packages you require here
-    // No need to add RnnPackage and MainReactPackage
-    return Arrays.<ReactPackage>asList(
-            // eg. new VectorIconsPackage()
-    );
-  }
 
   @Override
   public List<ReactPackage> createAdditionalReactPackages()
   {
     return getPackages();
+  }
+  /**
+   * A list of packages used by the app. If the app uses additional views
+   * or modules besides the default ones, add more packages here.
+   */
+  protected List<ReactPackage> getPackages() {
+    return Arrays.<ReactPackage>asList(
+            new SQLitePluginPackage(),   // register SQLite Plugin here
+            new MainReactPackage());
   }
 }

@@ -1,22 +1,33 @@
 import React, {Component} from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    ScrollView,
-    Dimensions,
-    Linking,
-    Button,
-    TouchableOpacity,
-    SafeAreaView
-} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Dimensions, Linking, Button, TouchableOpacity, SafeAreaView} from 'react-native';
 import {Navigation} from 'react-native-navigation'
 import {Header} from "react-native-elements";
+import SQLite from "react-native-sqlite-storage";
 
 
 
 const {width} = Dimensions.get('window');
+var db = SQLite.openDatabase({name: 'test.db', createFromLocation: '~www/test.db'});
 export default class Home extends Component<Props> {
+    constructor(props){
+        super(props);
+        this.state = {
+            description: [],
+        }
+        db.transaction((tx)=>{
+            tx.executeSql('SELECT * FROM testDetails',[],(tx,results)=>{
+                console.log("Query completed");
+                var tab=[];
+                var len = results.rows.length;
+                for (let i =0; i<len;i++) {
+                    tab[i] = results.rows.item(i);
+                }
+                this.setState({description:tab});
+
+            })
+        })
+    }
+
     goToScreen = (screenName) => {
         Navigation.push(this.props.componentId, {
             component: {
@@ -44,70 +55,22 @@ export default class Home extends Component<Props> {
                         color: '#D4D4D4',
                         onPress: () => this.openDrawer(),
                     }}
-                    centerComponent={{ text: 'Home Page', style: { color: '#000000',fontSize:30,fontFamily:'IndieFlower' } }}
+                    centerComponent={{ text: 'Home Page', style: { color: '#FFFFFF',fontSize:30,fontFamily:'IndieFlower' } }}
                     backgroundColor='#303060'
                 />
                 <ScrollView>
-                    <View style={styles.title}>
-                        <Text style={styles.titleText}>Title Test #1 </Text>
-                        <View style={styles.viewLink}>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag1
-                            </Text>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag2
-                            </Text>
-                        </View>
-                        <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua.</Text>
-                    </View>
-                    <View style={styles.title}>
-                        <Text style={styles.titleText}>Title Test #2 </Text>
-                        <View style={styles.viewLink}>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag1
-                            </Text>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag2
-                            </Text>
-                        </View>
-                        <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua.</Text>
-                    </View>
-                    <View style={styles.title}>
-                        <Text style={styles.titleText}>Title Test #3 </Text>
-                        <View style={styles.viewLink}>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag1
-                            </Text>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag2
-                            </Text>
-                        </View>
-                        <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua.</Text>
-                    </View>
-                    <View style={styles.title}>
-                        <Text style={styles.titleText}>Title Test #4 </Text>
-                        <View style={styles.viewLink}>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag1
-                            </Text>
-                            <Text style={styles.textLink}
-                                  onPress={() => Linking.openURL('')}>
-                                #Tag2
-                            </Text>
-                        </View>
-                        <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua.</Text>
-                    </View>
+                    {
+                      this.state.description.map((item,k)=>(
+                          <View key={k} style={styles.title}>
+                              <Text style={styles.titleText}>{item.name}</Text>
+                              <View style={styles.viewLink}>
+                                  <Text  style={styles.textLink}>{item.tags}</Text>
+                              </View>
+                              <Text>{item.description}</Text>
+                          </View>
+                      ))
+
+                    }
                     <View style={styles.footer}>
                         <Text style={styles.titleText}> Get to know your ranking result</Text>
                         <TouchableOpacity style={styles.buttonFooter} onPress={() => this.goToScreen
