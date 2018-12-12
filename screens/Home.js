@@ -65,6 +65,7 @@ export default class Home extends Component<Props> {
                               <Text style={styles.titleText}>{item.name}</Text>
                               <View style={styles.viewLink}>
                                   <Text  style={styles.textLink}>{item.tags}</Text>
+                                  <Text  style={styles.textLink}>{item.id}</Text>
                               </View>
                               <Text>{item.description}</Text>
                           </View>

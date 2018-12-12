@@ -111,15 +111,6 @@ export default class Test extends Component<Props> {
         }
     }
 
-    _answer(answer) {
-
-        if (answer === this.state.correct) {
-            const count = this.state.countCheck + 1;
-            this.setState({countCheck: count});
-            this.setState.score += 1;
-
-        }
-    }
 
     render() {
         let _this = this;
@@ -129,7 +120,6 @@ export default class Test extends Component<Props> {
                 <View key={i}>
                     <TouchableOpacity countCheck={_this.state.countCheck}
                                       style={styles.answerButton}
-                                      _onPress={() => _this._answer(i)}
                                       onPress={() => _this.next()}>
                         <Text style={{fontSize:20}}>{currentOptions[i]}</Text>
                     </TouchableOpacity>

@@ -1,5 +1,15 @@
 import React, {Component} from 'react'
-import {AsyncStorage, Text, View, TextInput, StyleSheet, TouchableOpacity, Dimensions, Image, ScrollView} from 'react-native'
+import {
+    AsyncStorage,
+    Text,
+    View,
+    TextInput,
+    StyleSheet,
+    TouchableOpacity,
+    Dimensions,
+    Image,
+    ScrollView
+} from 'react-native'
 import {Navigation} from "react-native-navigation";
 import SQLite from "react-native-sqlite-storage";
 
@@ -11,36 +21,63 @@ export default class App extends Component {
         super(props);
         this.state = {
             'name': '',
-            wynik: []
+            wynik: [],
+            data: '',
+            dataJ: '',
+            testData:'',
+
         }
 
     }
-    async componentDidMount(){
+
+    async componentDidMount() {
         this.downloadData()
+        let date = new Date(Date.now());
+        let day = date.getDay();
+        let month = date.getMonth() + 1;
+        let year = date.getFullYear();
+        this.setState({data: year})
     }
 
     downloadData = () => {
-        db.transaction((tx)=>{
+        db.transaction((tx) => {
             fetch('https://pwsz-quiz-api.herokuapp.com/api/tests')
                 .then(response => response.json())
                 .then(data => {
                     this.setState({wynik: data});
-                    this.addToDatabase(db,data);
+                    this.addToDatabase(db, data);
+                    this.downloadTests();
                 })
                 .catch(error => console.log(error));
         })
 
-    }
-    addToDatabase = (db,data) => {
-        db.transaction((tx)=>{
+    };
+
+
+    addToDatabase = (db, data) => {
+        db.transaction((tx) => {
             tx.executeSql('DELETE FROM testDetails; DELETE FROM tests;');
-            data.map((item,k)=>(
+            data.map((item, k) => (
                 tx.executeSql(`INSERT INTO testDetails (id,name,description,tags,level,numberOfTasks) VALUES 
                   ('${data[k].id}','${data[k].name}','${data[k].description}','${data[k].tags}','${data[k].level}',${data[k].numberOfTasks});`)
             ));
         });
 
     };
+
+    downloadTests = () => {
+
+
+        fetch('https://pwsz-quiz-api.herokuapp.com/api/test/5c05d64f2404232b3bc09a84')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({testData:data})
+            })
+            .catch(error => console.log(error))
+
+
+    };
+
     setName = (value) => {
         AsyncStorage.setItem('name', value);
         this.setState({'name': value});
@@ -66,7 +103,7 @@ export default class App extends Component {
                                   onPress={() => this.goToScreen('Home')}>
                     <Text>Zatwierdź</Text>
                 </TouchableOpacity>
-
+                <Text>{this.state.data}</Text>
 
             </View>
         )
