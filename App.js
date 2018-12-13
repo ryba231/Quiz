@@ -24,7 +24,8 @@ export default class App extends Component {
             wynik: [],
             data: '',
             dataJ: '',
-            testData:'',
+            testData:[],
+            testDataTask:[],
 
         }
 
@@ -72,6 +73,7 @@ export default class App extends Component {
             .then(response => response.json())
             .then(data => {
                 this.setState({testData:data})
+                console.log(data)
             })
             .catch(error => console.log(error))
 
@@ -103,7 +105,9 @@ export default class App extends Component {
                                   onPress={() => this.goToScreen('Home')}>
                     <Text>Zatwierdź</Text>
                 </TouchableOpacity>
-                <Text>{this.state.data}</Text>
+                <Text>{this.state.testData.name}</Text>
+                <Text>{this.state.testData && this.state.testData.tasks && this.state.testData.tasks[0].question}</Text>
+
 
             </View>
         )
