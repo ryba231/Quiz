@@ -20,19 +20,18 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            'name': '',
+            nickName: '',
             wynik: [],
             data: '',
-            dataJ: '',
-            testData:[],
-            testDataTask:[],
+            testData: [],
+            testDataTask: [],
 
         }
 
     }
 
     async componentDidMount() {
-        this.downloadData()
+        this.downloadData();
         let date = new Date(Date.now());
         let day = date.getDay();
         let month = date.getMonth() + 1;
@@ -57,7 +56,7 @@ export default class App extends Component {
 
     addToDatabase = (db, data) => {
         db.transaction((tx) => {
-            tx.executeSql('DELETE FROM testDetails; DELETE FROM tests;');
+            tx.executeSql('DELETE FROM testDetails; ');
             data.map((item, k) => (
                 tx.executeSql(`INSERT INTO testDetails (id,name,description,tags,level,numberOfTasks) VALUES 
                   ('${data[k].id}','${data[k].name}','${data[k].description}','${data[k].tags}','${data[k].level}',${data[k].numberOfTasks});`)
@@ -72,17 +71,23 @@ export default class App extends Component {
         fetch('https://pwsz-quiz-api.herokuapp.com/api/test/5c05d64f2404232b3bc09a84')
             .then(response => response.json())
             .then(data => {
-                this.setState({testData:data})
-                console.log(data)
+                this.setState({testData: data})
+                console.log(data);
+                db.transaction((tx) => {
+                    tx.executeSql('DELETE FROM tests;');
+                    tx.executeSql(`INSERT INTO tests (id,name,description,level,tasks,tags) VALUES 
+                  ('${data.id}','${data.name}','${data.description}','${data.level}','${JSON.stringify(data.tasks)}','${data.tags}');`)
+                    console.log(data.tasks)
+                    console.log(JSON.stringify(data.tasks))
+                    console.log(JSON.parse(JSON.stringify(data.tasks)))
+                })
             })
             .catch(error => console.log(error))
-
-
     };
-
+    
     setName = (value) => {
-        AsyncStorage.setItem('name', value);
-        this.setState({'name': value});
+        AsyncStorage.setItem(this.state.nickName, value);
+        this.setState({nickName: value});
     }
     goToScreen = (screenName) => {
         Navigation.setStackRoot('MAIN_STACK', {
@@ -100,13 +105,13 @@ export default class App extends Component {
                 <Text style={{fontSize: 30, fontFamily: 'Righteous-Regular'}}>Podaj swój nick</Text>
                 <TextInput style={styles.textInput} autoCapitalize='none'
                            onChangeText={this.setName}/>
-                <Text style={{fontSize: 30, fontFamily: 'IndieFlower'}}>Witamy: {this.state.name}</Text>
+                <Text style={{fontSize: 30, fontFamily: 'IndieFlower'}}>Witamy: {this.state.nickName}</Text>
                 <TouchableOpacity style={styles.buttons}
                                   onPress={() => this.goToScreen('Home')}>
                     <Text>Zatwierdź</Text>
                 </TouchableOpacity>
                 <Text>{this.state.testData.name}</Text>
-                <Text>{this.state.testData && this.state.testData.tasks && this.state.testData.tasks[0].question}</Text>
+                <Text>{this.state.testData && this.state.testData.tasks && this.state.testData.tasks[0].answers[0] && this.state.testData.tasks[0].answers[0].content}</Text>
 
 
             </View>

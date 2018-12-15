@@ -19,24 +19,30 @@ export default class Baza extends Component {
     constructor(props) {
         super(props);
 
-        this.state={
+        this.state = {
             question: "",
-            test:[]
+            test: [],
+            task: [],
         };
 
-        db.transaction((tx)=>{
-            tx.executeSql('SELECT * FROM test',[],(tx,results)=>{
+        db.transaction((tx) => {
+            tx.executeSql('SELECT * FROM tests', [], (tx, results) => {
                 console.log("Query completed");
-                var tab=[];
+                var tab = [];
                 var len = results.rows.length;
-                for (let i =0; i<len;i++) {
+                for (let i = 0; i < len; i++) {
+                    console.log(results.rows.item(i))
                     tab[i] = results.rows.item(i);
                 }
-                this.setState({test:tab});
+                console.log(tab);
+                this.setState({test: tab});
 
             })
-        })
 
+        })
+        console.log('START !!!!!!!!!');
+        console.log(this.state.test && this.state.test.tasks && this.state.test.tasks[0].content);
+        console.log('STOP !!!!!!!!!');
     }
 
     goToScreen = (screenName) => {
@@ -48,35 +54,32 @@ export default class Baza extends Component {
     };
 
 
-
-
-
     render() {
         return (
             <View style={styles.container}>
+                {this.state.test.map((item, k) => (
+                    <View key={k} style={{flexWrap: 'wrap',}}>
+                        <View>
+                            <Text style={{color: '#FFFFFF'}}>{item.id}</Text>
+                        </View>
+                        <View>
+                            <Text style={{color: '#FFFF00'}}>{item.name}</Text>
+                        </View>
+                        <View>
+                            <Text style={{color: '#FF00FF'}}>{item.description}</Text>
+                        </View>
+                        <View>
+                            <Text style={{color: '#00FFFF'}}>{item.tags}</Text>
+                        </View>
+                        <View>
+                            <Text style={{color: '#00FF00'}}>{item.level}</Text>
+                        </View>
+                        <View>
+                            <Text style={{color: '#AAFF00'}}>{JSON.parse(item.tasks)[1].answers[2].content}</Text>
+                        </View>
 
-               {this.state.test.map((item,k)=>(
-                   <View key={k} style={{flexWrap: 'nowrap',flexDirection: 'row',}}>
-                       <View>
-                           <Text>{item.id}</Text>
-                       </View>
-                       <View>
-                           <Text>{item.question}</Text>
-                       </View>
-                       <View>
-                           <Text>{item.option1}</Text>
-                       </View>
-                       <View>
-                           <Text>{item.option2}</Text>
-                       </View>
-                       <View>
-                           <Text>{item.option3}</Text>
-                       </View>
-                       <View>
-                           <Text>{item.option4}</Text>
-                       </View>
-                   </View>
-               ))}
+                    </View>
+                ))}
             </View>
         );
     }
