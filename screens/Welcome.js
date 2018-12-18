@@ -51,7 +51,7 @@ export default class WelcomeScreen extends Component {
                     </View>
                     <View style={styles.views}>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.goToScreen
-                        ('Test')}><Text>Test #1</Text></TouchableOpacity>
+                        ('Test')}><Text>Zagadki matematyczne</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.goToScreen
                         ('Baza')}><Text>Baza</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.goToScreen

@@ -7,126 +7,92 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Dimensions, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Button, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
+import {Navigation} from 'react-native-navigation'
+import SQLite from 'react-native-sqlite-storage'
 import {Header} from "react-native-elements";
-import {Navigation} from "react-native-navigation"
 
 const {width} = Dimensions.get('window');
-let arrnew = [];
-const jsonData = {
-    "quiz": {
-        "question1": {
-            "correct": "option3",
-            "options": {
-                "option1": "3",
-                "option2": "5",
-                "option3": "4",
-                "option4": "2"
-            },
-            "question": "2 + 2 = "
-        },
-        "question2": {
-            "correct": "option4",
-            "options": {
-                "option1": "2",
-                "option2": "1",
-                "option3": "5",
-                "option4": "0"
-            },
-            "question": "2 - 2 ="
-        },
-        "question3": {
-            "correct": "option1",
-            "options": {
-                "option1": "9",
-                "option2": "3",
-                "option3": "18",
-                "option4": "25"
-            },
-            "question": "3 * 3 ="
-        },
-        "question4": {
-            "correct": "option2",
-            "options": {
-                "option1": "11",
-                "option2": "1",
-                "option3": "2",
-                "option4": "5"
-            },
-            "question": "1 * 1 ="
-        },
-        "question5": {
-            "correct": "option3",
-            "options": {
-                "option1": "1",
-                "option2": "3",
-                "option3": "2",
-                "option4": "12"
-            },
-            "question": "1 + 1 ="
-        }
-    }
-};
+var db = SQLite.openDatabase({name: 'test.db', createFromLocation: '1'});
 
-export default class Test extends Component<Props> {
-    constructor(props) {
-        super(props);
+
+export default class Zagadki extends Component {
+
+    constructor() {
+        super();
         this.qno = 0;
         this.score = 0;
-
-        const jData = jsonData.quiz;
-        arrnew = Object.keys(jData).map(function (i) {
-            return jData[i];
-        });
+        this.testLength = 0;
         this.state = {
-            question: arrnew[this.qno].question,
-            options: arrnew[this.qno].options,
-            correct: arrnew[this.qno].correct,
-            countCheck: 0,
-        }
+            refreshing: false,
+            test: [],
+            testTasks: [{
+                question: '',
+                answers: {
+                    content: ',',
+                    isCorrect: false,
+                }
+            }],
+        };
+
 
     }
-    openDrawer = () =>{
-        Navigation.mergeOptions('drawerId',{
-            sideMenu:{
-                left:{
-                    visible: true
-                }
-            }
-        });
-    };
-    next() {
 
-        if (this.qno < arrnew.length - 1) {
-            this.qno++;
+    componentDidMount() {
+        this.downloadFromTheDatabase()
+    }
 
-            this.setState({
-                countCheck: 0,
-                question: arrnew[this.qno].question,
-                options: arrnew[this.qno].options,
-                correct: arrnew[this.qno].correct,
+
+    downloadFromTheDatabase = () => {
+
+        db.transaction((tx) => {
+            tx.executeSql(`SELECT *
+                           FROM tests
+                           WHERE id = '5c05d64f2404232b3bc09a84'`, [], (tx, results) => {
+                this.setState({test: results.rows.item(0)});
+                this.setState({testTasks: JSON.parse(results.rows.item(0).tasks)});
+                this.testLength = JSON.parse(results.rows.item(0).tasks).length;
+
             })
-        } else {
-            alert(this.score);
+
+        });
+
+    };
+
+
+    next(isCorrect) {
+        this.setState({refreshing: true});
+        if (this.qno < this.testLength-1) {
+            if(isCorrect){
+                this.score++;
+            }
+            this.qno++;
+        }else{
+            if(isCorrect){
+                this.score++;
+            }
+            alert(this.score +" "+ this.qno);
         }
+        this.setState({refreshing: false});
     }
 
 
     render() {
-        let _this = this;
-        const currentOptions = this.state.options;
-        const options = Object.keys(currentOptions).map(function (i) {
-            return (
-                <View key={i}>
-                    <TouchableOpacity countCheck={_this.state.countCheck}
-                                      style={styles.answerButton}
-                                      onPress={() => _this.next()}>
-                        <Text style={{fontSize:20}}>{currentOptions[i]}</Text>
-                    </TouchableOpacity>
-                </View>
-            )
+        this.testLength = this.state.testTasks.length;
 
-        });
+        let options = [];
+
+        for (let k = 0; k < this.state.testTasks[0].answers.length; k++) {
+            options.push(
+                <TouchableOpacity key={k} style={styles.answerButton}
+                                  onPress={() => this.next(this.state.testTasks[this.qno].answers[k].isCorrect)}>
+                    <Text>
+                        {this.state.testTasks[this.qno].answers[k].content}
+                    </Text>
+                </TouchableOpacity>
+            );
+        }
+
 
         return (
             <View style={styles.container}>
@@ -136,27 +102,26 @@ export default class Test extends Component<Props> {
                         color: '#D4D4D4',
                         onPress: () => this.openDrawer(),
                     }}
-                    centerComponent={{text: 'Test #1', style: {color: '#000000', fontSize: 30,fontFamily:'IndieFlower'}}}
+                    centerComponent={{
+                        text: this.state.test.name,
+                        style: {color: '#FFFFFF', fontSize: 30, fontFamily: 'IndieFlower'}
+                    }}
                     backgroundColor='#303060'
                 />
                 <View style={{padding: 10}}>
-                    <View style={{
-                        justifyContent: 'space-between',
-                        flexDirection: 'row',
-                        marginBottom: 60,
-                        alignItems: 'flex-start'
-                    }}>
-                        <Text style={{fontSize: 20}}>Question {this.qno +1} of 5</Text>
-                        <Text style={{fontSize: 20}}>Time: 28 sec</Text>
+                    <View style={styles.topView}>
+                        <Text style={{fontSize: 20}}>Question {this.qno +1} of {this.testLength}</Text>
+                        <Text style={{fontSize: 20}}>Time: {this.state.testTasks[this.qno].duration} sec</Text>
                     </View>
-                    <View style={{justifyContent: 'center', alignItems: 'center', margin: 15}}>
-                        <Text style={{fontSize: 20}}>{this.state.question}</Text>
+                    <View style={{justifyContent: 'center', alignItems: 'center', margin: 5}}>
+                        <Text style={{fontSize: 20}}>{this.state.testTasks[this.qno].question}</Text>
                     </View>
 
                     <View style={styles.viewButtons}>
                         {options}
                     </View>
                 </View>
+
             </View>
         );
     }
@@ -169,7 +134,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#4f5ca5',
     },
     viewButtons: {
-        marginTop: 30,
+        marginTop: 20,
         paddingVertical: 10,
         width: width - 20,
         flexDirection: 'row',
@@ -189,9 +154,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#8f8f8f',
         justifyContent: 'center',
         alignItems: 'center',
-
-
-
+    },
+    topView:{
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        marginBottom: 20,
+        alignItems: 'flex-start'
     }
+
 
 });

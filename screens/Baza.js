@@ -12,7 +12,7 @@ import {Navigation} from 'react-native-navigation'
 import SQLite from 'react-native-sqlite-storage'
 
 const {width} = Dimensions.get('window');
-var db = SQLite.openDatabase({name: 'test.db', createFromLocation: '~www/test.db'});
+var db = SQLite.openDatabase({name: 'test.db', createFromLocation: '1'});
 
 
 export default class Baza extends Component {
@@ -26,7 +26,7 @@ export default class Baza extends Component {
         };
 
         db.transaction((tx) => {
-            tx.executeSql('SELECT * FROM tests', [], (tx, results) => {
+            tx.executeSql(`SELECT * FROM tests WHERE id = '5c05d64f2404232b3bc09a84'`, [], (tx, results) => {
                 console.log("Query completed");
                 var tab = [];
                 var len = results.rows.length;
@@ -39,24 +39,19 @@ export default class Baza extends Component {
 
             })
 
-        })
+        });
         console.log('START !!!!!!!!!');
-        console.log(this.state.test && this.state.test.tasks && this.state.test.tasks[0].content);
+        console.log(this.state.test);
         console.log('STOP !!!!!!!!!');
     }
 
-    goToScreen = (screenName) => {
-        Navigation.setStackRoot('MAIN_STACK', {
-            component: {
-                name: screenName,
-            }
-        })
-    };
+
 
 
     render() {
         return (
             <View style={styles.container}>
+                <Text>{this.state.test && this.state.test['level']}</Text>
                 {this.state.test.map((item, k) => (
                     <View key={k} style={{flexWrap: 'wrap',}}>
                         <View>
@@ -75,7 +70,7 @@ export default class Baza extends Component {
                             <Text style={{color: '#00FF00'}}>{item.level}</Text>
                         </View>
                         <View>
-                            <Text style={{color: '#AAFF00'}}>{JSON.parse(item.tasks)[1].answers[2].content}</Text>
+                            <Text style={{color: '#AAFF00'}}>{JSON.parse(item.tasks)[1].question}</Text>
                         </View>
 
                     </View>

@@ -16,6 +16,8 @@ import SQLite from "react-native-sqlite-storage";
 const {width} = Dimensions.get('window');
 var db = SQLite.openDatabase({name: 'test.db', createFromLocation: '~www/test.db'});
 
+const id = ['5c05d64f2404232b3bc09a84', '5c05d64f2404232b3bc09a85', '5c05d64f2404232b3bc09a86', '5c05d64f2404232b3bc09a87'];
+
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -24,7 +26,6 @@ export default class App extends Component {
             wynik: [],
             data: '',
             testData: [],
-            testDataTask: [],
 
         }
 
@@ -57,6 +58,7 @@ export default class App extends Component {
     addToDatabase = (db, data) => {
         db.transaction((tx) => {
             tx.executeSql('DELETE FROM testDetails; ');
+            tx.executeSql('DELETE FROM tests;');
             data.map((item, k) => (
                 tx.executeSql(`INSERT INTO testDetails (id,name,description,tags,level,numberOfTasks) VALUES 
                   ('${data[k].id}','${data[k].name}','${data[k].description}','${data[k].tags}','${data[k].level}',${data[k].numberOfTasks});`)
@@ -67,24 +69,23 @@ export default class App extends Component {
 
     downloadTests = () => {
 
+        this.state.wynik.map((item, k) => (
+            console.log(item.id),
+                fetch('https://pwsz-quiz-api.herokuapp.com/api/test/' + item.id)
+                    .then(response => response.json())
+                    .then(data => {
+                        this.setState({testData: data})
+                        console.log(data);
+                        db.transaction((tx) => {
+                            tx.executeSql(`INSERT INTO tests (id,name,description,level,tasks,tags) VALUES 
+                  ('${data.id}','${data.name}','${data.description}','${data.level}','${JSON.stringify(data.tasks)}','${JSON.stringify(data.tags)}');`)
 
-        fetch('https://pwsz-quiz-api.herokuapp.com/api/test/5c05d64f2404232b3bc09a84')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({testData: data})
-                console.log(data);
-                db.transaction((tx) => {
-                    tx.executeSql('DELETE FROM tests;');
-                    tx.executeSql(`INSERT INTO tests (id,name,description,level,tasks,tags) VALUES 
-                  ('${data.id}','${data.name}','${data.description}','${data.level}','${JSON.stringify(data.tasks)}','${data.tags}');`)
-                    console.log(data.tasks)
-                    console.log(JSON.stringify(data.tasks))
-                    console.log(JSON.parse(JSON.stringify(data.tasks)))
-                })
-            })
-            .catch(error => console.log(error))
+                        })
+                    })
+                    .catch(error => console.log(error))
+        ))
     };
-    
+
     setName = (value) => {
         AsyncStorage.setItem(this.state.nickName, value);
         this.setState({nickName: value});
@@ -113,6 +114,15 @@ export default class App extends Component {
                 <Text>{this.state.testData.name}</Text>
                 <Text>{this.state.testData && this.state.testData.tasks && this.state.testData.tasks[0].answers[0] && this.state.testData.tasks[0].answers[0].content}</Text>
 
+                <View>
+                    {
+                        id.map((item,k)=>(
+                            <View key={k}>
+                                <Text>{item}</Text>
+                            </View>
+                        ))
+                    }
+                </View>
 
             </View>
         )
