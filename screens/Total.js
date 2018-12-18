@@ -13,10 +13,31 @@ import SQLite from 'react-native-sqlite-storage'
 import {Header} from "react-native-elements";
 
 const {width} = Dimensions.get('window');
-
-
+let date = new Date(Date.now());
+let day = date.getDate();
+let month = date.getMonth() + 1;
+let year = date.getFullYear();
+let dateToday = year +'-' + month + '-' + day;
 
 export default class Total extends Component {
+    constructor(){
+        super();
+
+        /*fetch('https://pwsz-quiz-api.herokuapp.com/api/result', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nick: 'Zbigniew',
+                score: 10,
+                total:10,
+                type:'Zagadki Matematyczne',
+                date: dateToday,
+            }),
+        });*/
+    }
 
 
     render() {
@@ -34,6 +55,12 @@ export default class Total extends Component {
                     }}
                     backgroundColor='#303060'
                 />
+
+                <Text>{dateToday}</Text>
+                <Text>{this.props.testName}</Text>
+                <Text>{this.props.lengthTest}</Text>
+                <Text>{this.props.scoreTest}</Text>
+                <Text>{this.props.nickName}</Text>
 
             </View>
         );

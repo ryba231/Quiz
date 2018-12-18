@@ -62,16 +62,28 @@ export default class Zagadki extends Component {
 
     next(isCorrect) {
         this.setState({refreshing: true});
-        if (this.qno < this.testLength-1) {
-            if(isCorrect){
+        if (this.qno < this.testLength - 1) {
+            if (isCorrect) {
                 this.score++;
             }
             this.qno++;
-        }else{
-            if(isCorrect){
+        } else {
+            if (isCorrect) {
                 this.score++;
             }
-            alert(this.score +" "+ this.qno);
+            alert(this.score + " " + this.qno);
+            Navigation.push('MAIN_STACK', {
+                component: {
+                    name: 'Total',
+                    passProps: {
+                        scoreTest: this.score,
+                        lengthTest: this.testLength,
+                        testName: this.state.test.name
+                    },
+                }
+            })
+
+
         }
         this.setState({refreshing: false});
     }
@@ -110,7 +122,7 @@ export default class Zagadki extends Component {
                 />
                 <View style={{padding: 10}}>
                     <View style={styles.topView}>
-                        <Text style={{fontSize: 20}}>Question {this.qno +1} of {this.testLength}</Text>
+                        <Text style={{fontSize: 20}}>Question {this.qno + 1} of {this.testLength}</Text>
                         <Text style={{fontSize: 20}}>Time: {this.state.testTasks[this.qno].duration} sec</Text>
                     </View>
                     <View style={{justifyContent: 'center', alignItems: 'center', margin: 5}}>
@@ -155,7 +167,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    topView:{
+    topView: {
         justifyContent: 'space-between',
         flexDirection: 'row',
         marginBottom: 20,
