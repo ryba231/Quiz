@@ -23,7 +23,8 @@ export default class Total extends Component {
     constructor() {
         super();
     }
-    saveData(nickName,score,total,type,date){
+
+    saveData(nickName, score, total, type, date) {
         fetch('https://pwsz-quiz-api.herokuapp.com/api/result', {
             method: 'POST',
             headers: {
@@ -32,13 +33,22 @@ export default class Total extends Component {
             },
             body: JSON.stringify({
                 nick: nickName,
-                score:score,
+                score: score,
                 total: total,
                 type: type,
                 date: date,
             }),
         });
     }
+    openDrawer = () =>{
+        Navigation.mergeOptions('drawerId',{
+            sideMenu:{
+                left:{
+                    visible: true
+                }
+            }
+        });
+    };
 
     render() {
         return (
@@ -55,14 +65,16 @@ export default class Total extends Component {
                     }}
                     backgroundColor='#303060'
                 />
+                <View style={{alignItems: 'center',margin:40}}>
+                    <Text style={styles.text}>{this.props.testName}</Text>
+                    <Text style={styles.text}>Nick: {this.props.nick}</Text>
+                    <Text style={styles.text}>Zdobytych punktów {this.props.scoreTest} na {this.props.lengthTest}</Text>
 
-                <Text>{dateToday}</Text>
-                <Text>{this.props.nick}</Text>
-                <Text>{this.props.testName}</Text>
-                <Text>{this.props.lengthTest}</Text>
-                <Text>{this.props.scoreTest}</Text>
-                <TouchableOpacity onPress={()=> this.saveData(this.props.nick,this.props.scoreTest,this.props.lengthTest,this.props.testName,dateToday)}><Text>Zapisz wynik</Text></TouchableOpacity>
-
+                    <TouchableOpacity style={styles.button}
+                                      onPress={() => this.saveData(this.props.nick, this.props.scoreTest, this.props.lengthTest, this.props.testName, dateToday)}>
+                        <Text style={{color:'#FFFFFF'}}>Zapisz wynik</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }
@@ -74,6 +86,22 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#4f5ca5',
     },
+    button: {
+        width: 150,
+        height: 50,
+        marginTop: 20,
+        borderWidth: 0.5,
+        borderRadius: 30,
+        borderColor: '#000000',
+        backgroundColor: '#366d47',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    text:{
+        color:'#FFFFFF',
+        fontSize: 20,
+        fontFamily: 'Righteous-Regular',
+    }
 
 
 });

@@ -121,8 +121,6 @@ export default class Zagadki extends Component {
                     backgroundColor='#303060'
                 />
                 <View style={{padding: 10}}>
-                    <Text>{this.props.nick}</Text>
-                    <Text>{this.props.testId}</Text>
                     <View style={styles.topView}>
                         <Text style={{fontSize: 20}}>Question {this.qno + 1} of {this.testLength}</Text>
                         <Text style={{fontSize: 20}}>Time: {this.state.testTasks[this.qno].duration} sec</Text>
