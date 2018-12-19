@@ -17,28 +17,28 @@ let date = new Date(Date.now());
 let day = date.getDate();
 let month = date.getMonth() + 1;
 let year = date.getFullYear();
-let dateToday = year +'-' + month + '-' + day;
+let dateToday = year + '-' + month + '-' + day;
 
 export default class Total extends Component {
-    constructor(){
+    constructor() {
         super();
-
-        /*fetch('https://pwsz-quiz-api.herokuapp.com/api/result', {
+    }
+    saveData(nickName,score,total,type,date){
+        fetch('https://pwsz-quiz-api.herokuapp.com/api/result', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                nick: 'Zbigniew',
-                score: 10,
-                total:10,
-                type:'Zagadki Matematyczne',
-                date: dateToday,
+                nick: nickName,
+                score:score,
+                total: total,
+                type: type,
+                date: date,
             }),
-        });*/
+        });
     }
-
 
     render() {
         return (
@@ -57,10 +57,11 @@ export default class Total extends Component {
                 />
 
                 <Text>{dateToday}</Text>
+                <Text>{this.props.nick}</Text>
                 <Text>{this.props.testName}</Text>
                 <Text>{this.props.lengthTest}</Text>
                 <Text>{this.props.scoreTest}</Text>
-                <Text>{this.props.nickName}</Text>
+                <TouchableOpacity onPress={()=> this.saveData(this.props.nick,this.props.scoreTest,this.props.lengthTest,this.props.testName,dateToday)}><Text>Zapisz wynik</Text></TouchableOpacity>
 
             </View>
         );
@@ -73,7 +74,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#4f5ca5',
     },
-
 
 
 });

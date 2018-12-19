@@ -28,10 +28,14 @@ export default class Home extends Component<Props> {
         })
     }
 
-    goToScreen = (screenName) => {
+    goToScreen = (screenName,id) => {
         Navigation.push(this.props.componentId, {
             component: {
-                name: screenName
+                name: screenName,
+                passProps: {
+                    nick: this.props.nick,
+                    testId: id,
+                },
             }
         })
     };
@@ -59,15 +63,17 @@ export default class Home extends Component<Props> {
                     backgroundColor='#303060'
                 />
                 <ScrollView>
+                    <Text>{this.props.nick}</Text>
                     {
                       this.state.description.map((item,k)=>(
-                          <View key={k} style={styles.title}>
+                          <TouchableOpacity key={k} style={styles.title} onPress={()=>this.goToScreen('Test',item.id)}>
                               <Text style={styles.titleText}>{item.name}</Text>
                               <View style={styles.viewLink}>
                                   <Text  style={styles.textLink}>{item.tags}</Text>
                               </View>
                               <Text>{item.description}</Text>
-                          </View>
+
+                          </TouchableOpacity>
                       ))
 
                     }

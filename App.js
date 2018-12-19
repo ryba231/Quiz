@@ -16,8 +16,6 @@ import SQLite from "react-native-sqlite-storage";
 const {width} = Dimensions.get('window');
 var db = SQLite.openDatabase({name: 'test.db', createFromLocation: '~www/test.db'});
 
-const id = ['5c05d64f2404232b3bc09a84', '5c05d64f2404232b3bc09a85', '5c05d64f2404232b3bc09a86', '5c05d64f2404232b3bc09a87'];
-
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -94,6 +92,9 @@ export default class App extends Component {
         Navigation.setStackRoot('MAIN_STACK', {
             component: {
                 name: screenName,
+                passProps: {
+                    nick: this.state.nickName,
+                },
             }
         })
     };
@@ -111,19 +112,6 @@ export default class App extends Component {
                                   onPress={() => this.goToScreen('Home')}>
                     <Text>Zatwierdź</Text>
                 </TouchableOpacity>
-                <Text>{this.state.testData.name}</Text>
-                <Text>{this.state.testData && this.state.testData.tasks && this.state.testData.tasks[0].answers[0] && this.state.testData.tasks[0].answers[0].content}</Text>
-
-                <View>
-                    {
-                        id.map((item,k)=>(
-                            <View key={k}>
-                                <Text>{item}</Text>
-                            </View>
-                        ))
-                    }
-                </View>
-
             </View>
         )
     }
