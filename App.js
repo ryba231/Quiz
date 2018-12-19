@@ -15,27 +15,34 @@ import SQLite from "react-native-sqlite-storage";
 
 const {width} = Dimensions.get('window');
 var db = SQLite.openDatabase({name: 'test.db', createFromLocation: '~www/test.db'});
-
+const date = new Date(Date.now());
 export default class App extends Component {
     constructor(props) {
         super(props);
+        this.dDay=0;
+        this.dMonth= 0;
+        this.dYear=0;
         this.state = {
             nickName: '',
             wynik: [],
-            data: '',
             testData: [],
+
+
 
         }
 
     }
 
     async componentDidMount() {
-        this.downloadData();
-        let date = new Date(Date.now());
-        let day = date.getDay();
-        let month = date.getMonth() + 1;
-        let year = date.getFullYear();
-        this.setState({data: year})
+        let tDay = date.getDate();
+        let tMonth = date.getMonth() + 1;
+        let tYear = date.getFullYear();
+        if (tDay !== this.dDay || tMonth !== this.dMonth || tYear !== this.dYear) {
+            this.downloadData();
+            this.dDay=tDay;
+            this.dMonth= tMonth;
+            this.dYear=tYear;
+        }
     }
 
     downloadData = () => {
@@ -87,6 +94,7 @@ export default class App extends Component {
     setName = (value) => {
         AsyncStorage.setItem(this.state.nickName, value);
         this.setState({nickName: value});
+
     }
     goToScreen = (screenName) => {
         Navigation.setStackRoot('MAIN_STACK', {
@@ -100,19 +108,23 @@ export default class App extends Component {
     };
 
     render() {
+        console.log(this.state.dDay);
+        console.log(this.state.dMonth);
+        console.log(this.state.dYear);
         return (
             <View style={styles.container}>
                 <Image style={{width: 160, height: 160}}
                        source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
-                <Text style={{fontSize: 30, fontFamily: 'Righteous-Regular'}}>Podaj swój nick</Text>
+                <Text style={{fontSize: 30, fontFamily: 'Righteous-Regular',color:'#FFFFFF'}}>Podaj swój nick</Text>
                 <TextInput style={styles.textInput} autoCapitalize='none'
                            onChangeText={this.setName}/>
-                <Text style={{fontSize: 30, fontFamily: 'IndieFlower'}}>Witamy: {this.state.nickName}</Text>
+                <Text style={{fontSize: 30, fontFamily: 'IndieFlower', color:'#FFFFFF'}}>Witamy: {this.state.nickName}</Text>
                 <TouchableOpacity style={styles.buttons}
                                   onPress={() => this.goToScreen('Home')}>
-                    <Text>Zatwierdź</Text>
+                    <Text style={styles.textColor}>Zatwierdź</Text>
                 </TouchableOpacity>
             </View>
+
         )
     }
 }
@@ -144,4 +156,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
+    textColor: {
+        color: '#FFFFFF',
+    }
 });

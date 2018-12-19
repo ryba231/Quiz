@@ -48,7 +48,7 @@ export default class Zagadki extends Component {
         db.transaction((tx) => {
             tx.executeSql(`SELECT *
                            FROM tests
-                           WHERE id = '5c05d64f2404232b3bc09a84'`, [], (tx, results) => {
+                           WHERE id = ?`, [this.props.testId], (tx, results) => {
                 this.setState({test: results.rows.item(0)});
                 this.setState({testTasks: JSON.parse(results.rows.item(0).tasks)});
                 this.testLength = JSON.parse(results.rows.item(0).tasks).length;
@@ -87,6 +87,15 @@ export default class Zagadki extends Component {
         }
         this.setState({refreshing: false});
     }
+    openDrawer = () =>{
+        Navigation.mergeOptions('drawerId',{
+            sideMenu:{
+                left:{
+                    visible: true
+                }
+            }
+        });
+    };
 
 
     render() {

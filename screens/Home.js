@@ -63,7 +63,6 @@ export default class Home extends Component<Props> {
                     backgroundColor='#303060'
                 />
                 <ScrollView>
-                    <Text>{this.props.nick}</Text>
                     {
                       this.state.description.map((item,k)=>(
                           <TouchableOpacity key={k} style={styles.title} onPress={()=>this.goToScreen('Test',item.id)}>
@@ -71,7 +70,7 @@ export default class Home extends Component<Props> {
                               <View style={styles.viewLink}>
                                   <Text  style={styles.textLink}>{item.tags}</Text>
                               </View>
-                              <Text>{item.description}</Text>
+                              <Text style={{color:'#c5c5c5'}}>{item.description}</Text>
 
                           </TouchableOpacity>
                       ))
@@ -80,7 +79,7 @@ export default class Home extends Component<Props> {
                     <View style={styles.footer}>
                         <Text style={styles.titleText}> Get to know your ranking result</Text>
                         <TouchableOpacity style={styles.buttonFooter} onPress={() => this.goToScreen
-                        ('Results')}><Text>Check!</Text></TouchableOpacity>
+                        ('Results')}><Text style={{color:'#FFFFFF'}}>Check!</Text></TouchableOpacity>
                     </View>
                 </ScrollView>
             </View>
@@ -100,14 +99,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         borderWidth: 0.5,
         width: width - 20,
+        borderColor: '#e5e5e5'
     },
     titleText: {
+        color:'#FFFFFF',
         fontSize: 20,
         fontWeight: 'bold',
         fontFamily:'Righteous-Regular'
     },
     textLink: {
-        color: '#3c6eff',
+        color: '#a2bfff',
         textDecorationLine: 'underline',
         marginRight: 3,
     },

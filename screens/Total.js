@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, Button, TouchableOpacity, Dimensions, ScrollView} from 'react-native';
+import {StyleSheet, Text, View, Button, TouchableOpacity, Dimensions, ScrollView, Image} from 'react-native';
 import {Navigation} from 'react-native-navigation'
 import SQLite from 'react-native-sqlite-storage'
 import {Header} from "react-native-elements";
@@ -39,6 +39,11 @@ export default class Total extends Component {
                 date: date,
             }),
         });
+        Navigation.push(this.props.componentId, {
+            component: {
+                name: 'Home',
+            }
+        })
     }
     openDrawer = () =>{
         Navigation.mergeOptions('drawerId',{
@@ -66,6 +71,8 @@ export default class Total extends Component {
                     backgroundColor='#303060'
                 />
                 <View style={{alignItems: 'center',margin:40}}>
+                    <Image style={{width: 160, height: 160,}}
+                           source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
                     <Text style={styles.text}>{this.props.testName}</Text>
                     <Text style={styles.text}>Nick: {this.props.nick}</Text>
                     <Text style={styles.text}>Zdobytych punktów {this.props.scoreTest} na {this.props.lengthTest}</Text>
