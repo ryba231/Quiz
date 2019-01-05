@@ -16,7 +16,7 @@ Navigation.events().registerAppLaunchedListener(() => {
     });
 });
 */
-import App from './App';
+import App from './screens/App';
 import {Dimensions}from 'react-native'
 import {Navigation} from 'react-native-navigation'
 import Welcome from './screens/Welcome'

@@ -50,7 +50,12 @@ export default class Zagadki extends Component {
                            FROM tests
                            WHERE id = ?`, [this.props.testId], (tx, results) => {
                 this.setState({test: results.rows.item(0)});
-                this.setState({testTasks: JSON.parse(results.rows.item(0).tasks)});
+                let a = JSON.parse(results.rows.item(0).tasks);
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                this.setState({testTasks:a});
                 this.testLength = JSON.parse(results.rows.item(0).tasks).length;
 
             })
@@ -114,6 +119,13 @@ export default class Zagadki extends Component {
             );
         }
 
+        let a = options;
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        options = a;
+
 
         return (
             <View style={styles.container}>
@@ -139,7 +151,9 @@ export default class Zagadki extends Component {
                     </View>
 
                     <View style={styles.viewButtons}>
-                        {options}
+                        {
+                            options
+                        }
                     </View>
                 </View>
 

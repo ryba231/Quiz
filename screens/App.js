@@ -34,15 +34,8 @@ export default class App extends Component {
     }
 
     async componentDidMount() {
-        let tDay = date.getDate();
-        let tMonth = date.getMonth() + 1;
-        let tYear = date.getFullYear();
-        if (tDay !== this.dDay || tMonth !== this.dMonth || tYear !== this.dYear) {
             this.downloadData();
-            this.dDay=tDay;
-            this.dMonth= tMonth;
-            this.dYear=tYear;
-        }
+
     }
 
     downloadData = () => {

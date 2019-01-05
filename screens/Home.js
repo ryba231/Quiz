@@ -22,11 +22,17 @@ export default class Home extends Component<Props> {
                 for (let i =0; i<len;i++) {
                     tab[i] = results.rows.item(i);
                 }
-                this.setState({description:tab});
+                let a = tab;
+                for (let i = a.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [a[i], a[j]] = [a[j], a[i]];
+                }
+                this.setState({description:a});
 
             })
         })
     }
+
 
     goToScreen = (screenName,id) => {
         Navigation.push(this.props.componentId, {
@@ -39,6 +45,7 @@ export default class Home extends Component<Props> {
             }
         })
     };
+
     openDrawer = () =>{
       Navigation.mergeOptions('drawerId',{
           sideMenu:{
@@ -48,6 +55,13 @@ export default class Home extends Component<Props> {
           }
       });
     };
+
+
+
+
+
+
+
 
 
     render() {

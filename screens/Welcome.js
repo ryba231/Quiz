@@ -8,10 +8,11 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, Button, TouchableOpacity, Dimensions, ScrollView, Image} from 'react-native';
-import {Navigation} from 'react-native-navigation'
+import {Navigation} from 'react-native-navigation';
 
 
 const {width} = Dimensions.get('window');
+const idTest = ['5c05d64f2404232b3bc09a84','5c05d64f2404232b3bc09a85','5c05d64f2404232b3bc09a86','5c05d64f2404232b3bc09a87'];
 
 export default class WelcomeScreen extends Component {
 
@@ -33,6 +34,31 @@ export default class WelcomeScreen extends Component {
             });
     };
 
+    shuffleTest=(a)=>{
+
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+
+        Navigation.setStackRoot('MAIN_STACK', {
+            component: {
+                name: 'Test',
+                passProps: {
+                    testId: a[0],
+                },
+            }
+        }),
+            Navigation.mergeOptions('drawerId', {
+                sideMenu: {
+                    left: {
+                        visible: false
+                    }
+                }
+            });
+
+    }
+
 
     render() {
         return (
@@ -51,6 +77,12 @@ export default class WelcomeScreen extends Component {
                         ('Home')}><Text style={styles.textColor}>Home Page</Text></TouchableOpacity>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.goToScreen
                         ('Results')}><Text style={styles.textColor}>Results</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.buttons} onPress={() => this.shuffleTest(idTest)}>
+                            <Text style={styles.textColor}>Losowy test</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttons} onPress={() => this.props.downloadTest}>
+                            <Text style={styles.textColor}>Pobierz testy</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.views}>
                         <TouchableOpacity style={styles.buttons} onPress={() => this.goToScreen
